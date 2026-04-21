@@ -1,20 +1,16 @@
 <?php
-$host = "localhost";
-$dbname = "usersdb";
-$user = "root";
-$password = "";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-];
 
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8;";
+$host ="localhost";
+$namedb ="userdb";
+$user ="root";
+$password ="";
 
-try{
-    $pdo = new PDO($dsn,$user,$password);
-  //  echo"connexion réussie <br>";
-}catch(PDOException$e){
-    echo "erreur";
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$namedb;charset=utf8", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // echo "Connexion reusie <br>";
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
 }
 
 
