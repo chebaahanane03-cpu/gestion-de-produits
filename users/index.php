@@ -1,35 +1,24 @@
 
 <?php
-require "functions.php";
+require "function.php";
 require "db.php";
-$allUsers = getAllUsers($pdo);
-$allActivetis = filltreUserByActive($pdo, $active);
+$UsersAray = getAllUsers($pdo);
 
-if($_SERVER['REQUEST_METHOD'] == "GET"){
+if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(isset($_GET["role"])) {
         $role = $_GET["role"];
-        if($role == "all"){
-            $allUsers = getAllUsers($pdo);
-        }
-        elseif($role == "student" || $role == "teacher"){
-            $allUsers = filltreUsersByRole($pdo, $role);
+        if($role=="all"){
+            $UsersAray =getAllUsers($pdo);
+        }elseif($role=="teacher" || $role=="student"){
+            $UsersAray=fillterUsersByRole($pdo, $role);
         }
     }
-}
-if($_SERVER['REQUEST_METHOD'] == "GET"){
-    if(isset($_GET["active"])) {
-        $active = $_GET["active"];
-        if($active == "0"){
-            $allActivetis = filltreUserByActive($pdo, $active);
-        }
-        elseif($active == "1"){
-            $allActivetis = filltreUserByActive($pdo, $active);
-        }
+    if(isset($_GET["search"]) && $_GET["search"] != "") {
+        $search = $_GET["search"];
+        $UsersAray = searchUsers($pdo, $search);
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
