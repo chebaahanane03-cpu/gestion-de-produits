@@ -1,20 +1,30 @@
 <?php
 function getAllUsers($pdo){
-    // cette functions se connecte ala basse de donnée et returne all users sous forme d'un array
-    $sql = "SELECT * from users";
+    // cette function se conectte  al abse de donner et retourne la liste de tout utilisateur  se forme d un array
+    $sql = "SELECT * FROM users";
     $stmt = $pdo->query($sql);
-    $users = $stmt->fetchall(PDO::FETCH_ASSOC);
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $users;
 }
-function filltreUsersByRole($pdo, $role){
-    $sql="SELECT * from users where role=?";
-    $stmt=$pdo->prepare($sql);
+
+function fillterUsersByRole($pdo, $role){
+    $sql= "SELECT * FROM users where role = ?";
+    $stmt= $pdo->prepare($sql);
     $stmt->execute([$role]);
-    return $stmt->fetchall();
-} 
-function filltreUserByActive($pdo, $active){
-    $sql="SELECT * from users where active=?";
-    $stmt=$pdo->prepare($sql);
+    return $stmt->fetchAll();
+}
+
+function fillterUsersByActive($pdo, $active){
+    $sql= "SELECT * FROM users where active = ?";
+    $stmt= $pdo->prepare($sql);
     $stmt->execute([$active]);
-    return $stmt->fetchall();
+    return $stmt->fetchAll();
+}
+
+function searchUsers($pdo, $search){
+    $sql = "SELECT * FROM users 
+            WHERE fname LIKE ? OR lname LIKE ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(["%$search%", "%$search%"]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
